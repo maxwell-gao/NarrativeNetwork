@@ -1,5 +1,4 @@
-# src/worldblock/chain.py
-from .block import WorldBlock
+from block import WorldBlock
 
 
 class WorldChain:

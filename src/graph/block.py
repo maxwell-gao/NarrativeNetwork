@@ -1,6 +1,7 @@
 import hashlib
 import time
 import json
+from state import WorldState 
 
 
 class WorldBlock:
