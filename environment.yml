@@ -1,0 +1,10 @@
+name: ecolllm  
+dependencies:
+  - python=3.8  
+  - pip  
+  - tqdm  
+  
+  - pip:
+    - openai  
+    - networkx
+    - python-dotenv
