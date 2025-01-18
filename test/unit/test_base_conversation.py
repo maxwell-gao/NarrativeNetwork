@@ -105,11 +105,23 @@ class TestBaseConversation(unittest.TestCase):
         )
         conversation.add_api_message(user_message)
         # Print the conversation
-        print("Conversation:", conversation)
+        pprint("Conversation:", conversation)
         # Verify the conversation history
         self.assertEqual(len(conversation.messages), 2)
         self.assertEqual(conversation.messages[0].content[0]["content"], "What's the weather today?")
         # self.assertEqual(conversation.messages[1].content[0]["content"], "Mock response to: What's the weather today?")
+        # Start multi-round conversation
+        user_message = BaseMessage(
+            sender="User",
+            receiver="DeepSeek",
+            message_type="user_message",
+            content=[{"role": "user", "content": "Tell me a joke."}]
+        )
+        conversation.add_api_message(user_message)
+        # Print the conversation
+        pprint("Conversation:", conversation)
+        # Verify the conversation history
+        self.assertEqual(len(conversation.messages), 4)
 
 if __name__ == "__main__":
     unittest.main()

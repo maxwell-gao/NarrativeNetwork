@@ -129,7 +129,7 @@ class BaseConversation:
         """
         self.messages.append(message)
         # Prepare the messages for the API call
-        api_messages = [{"role": "user", "content": json.dumps(msg.content) if msg.content else ""} for msg in self.messages[-50:]]
+        api_messages = [{"role": "user", "content": json.dumps(msg.content, default=str) if msg.content else ""} for msg in self.messages[-50:]]
 
         # Call the DeepSeek API
         response = client.chat.completions.create(
