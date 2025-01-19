@@ -9,6 +9,7 @@ from itertools import permutations
 # Use python-dotenv to read .env file
 from dotenv import load_dotenv
 from openai import OpenAI
+import networkx as nx
 
 load_dotenv()
 api_key = os.getenv("DEEPSEEK_API_KEY")
@@ -226,7 +227,7 @@ class BaseAgent:
 class BaseNetwork:
     def __init__(self, agent_ids, p=0.5):
         """
-        Initialize a random directed network.
+        Initialize a random directed network using NetworkX.
 
         Args:
             agent_ids (list): List of agent IDs.
@@ -234,37 +235,31 @@ class BaseNetwork:
         """
         self.agent_ids = agent_ids
         self.p = p
-        self.graph = self.generate_random_digraph()
+        self.graph = nx.DiGraph()
+        self.graph.add_nodes_from(agent_ids)
+        self.generate_random_digraph()
         # Generate a UUID and store it as a string
         self.uuid = str(uuid.uuid4())
 
     def generate_random_digraph(self):
         """
-        Generate a random directed graph.
-
-        Returns:
-            dict: Adjacency list representation of the directed graph.
-                  Keys are node IDs, and values are lists of nodes that the key node points to.
+        Generate a random directed graph with the specified edge probability.
         """
-        graph = {id: [] for id in self.agent_ids}  # Initialize adjacency list
-        for start, end in permutations(
-            self.agent_ids, 2
-        ):  # Generate all possible ordered pairs
-            if random.random() < self.p:  # Add directed edge with probability p
-                if end not in graph[start]:  # Avoid duplicate edges
-                    graph[start].append(end)
-        return graph
+        for start, end in permutations(self.agent_ids, 2):
+            if random.random() < self.p:
+                self.graph.add_edge(start, end)
 
     def to_json(self):
         """
-        Convert the directed graph structure to a JSON-formatted string.
+        Convert the directed graph to a JSON-formatted string.
 
         Returns:
             str: JSON representation of the directed graph.
         """
-        # Convert integer keys to strings for JSON compatibility
-        graph_str_keys = {str(k): v for k, v in self.graph.items()}
-        return json.dumps(graph_str_keys, indent=4)
+        # Convert the graph to a dictionary with node IDs as keys and neighbors as values
+        graph_dict = {str(node): list(self.graph.successors(node))
+                      for node in self.graph.nodes}
+        return json.dumps(graph_dict, indent=4)
 
     def __repr__(self):
         """
@@ -274,3 +269,59 @@ class BaseNetwork:
             str: UUID of the object.
         """
         return self.uuid
+
+    def disconnect_edge(self, start, end):
+        """
+        Disconnect a specific edge between two nodes.
+
+        Args:
+            start: The starting node ID.
+            end: The ending node ID.
+        """
+        if self.graph.has_edge(start, end):
+            self.graph.remove_edge(start, end)
+
+    def connect_edge(self, start, end):
+        """
+        Connect a new edge between two nodes.
+
+        Args:
+            start: The starting node ID.
+            end: The ending node ID.
+        """
+        if not self.graph.has_edge(start, end):
+            self.graph.add_edge(start, end)
+
+    def reverse_edge(self, start, end):
+        """
+        Reverse the direction of a specific edge if both nodes agree.
+
+        Args:
+            start: The starting node ID.
+            end: The ending node ID.
+
+        Returns:
+            bool: True if the edge was reversed, False otherwise.
+        """
+        if self.graph.has_edge(start, end):
+            # Simulate agreement between nodes
+            agree = self.agreement(start, end)
+            if agree:
+                self.graph.remove_edge(start, end)
+                self.graph.add_edge(end, start)
+                return True
+        return False
+
+    def agreement(self, start, end):
+        """
+        Simulate agreement between two nodes to reverse an edge.
+
+        Args:
+            start: The starting node ID.
+            end: The ending node ID.
+
+        Returns:
+            bool: True if both nodes agree, False otherwise.
+        """
+        # For simplicity, assume both nodes agree 50% of the time
+        return random.random() < 0.5
