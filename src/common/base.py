@@ -257,8 +257,9 @@ class BaseNetwork:
             str: JSON representation of the directed graph.
         """
         # Convert the graph to a dictionary with node IDs as keys and neighbors as values
-        graph_dict = {str(node): list(self.graph.successors(node))
-                      for node in self.graph.nodes}
+        graph_dict = {
+            str(node): list(self.graph.successors(node)) for node in self.graph.nodes
+        }
         return json.dumps(graph_dict, indent=4)
 
     def __repr__(self):
@@ -325,3 +326,29 @@ class BaseNetwork:
         """
         # For simplicity, assume both nodes agree 50% of the time
         return random.random() < 0.5
+
+    def execute_action(self, start, end, method, action):
+        """
+        Execute an action (reverse, disconnect, or connect) based on the result of the method.
+
+        Args:
+            start: The starting node ID.
+            end: The ending node ID.
+            method: A function that takes (start, end, action) and returns a boolean.
+            action: The action to perform ("reverse", "disconnect", or "connect").
+
+        Returns:
+            bool: True if the action was executed, False otherwise.
+        """
+        if method(start, end, action):
+            if action == "reverse":
+                return self.reverse_edge(start, end)
+            elif action == "disconnect":
+                self.disconnect_edge(start, end)
+                return True
+            elif action == "connect":
+                self.connect_edge(start, end)
+                return True
+            else:
+                raise ValueError(f"Unknown action: {action}")
+        return False

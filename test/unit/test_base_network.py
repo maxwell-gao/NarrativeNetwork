@@ -5,6 +5,10 @@ from itertools import permutations
 
 
 class TestBaseNetwork(unittest.TestCase):
+    def setUp(self):
+        """Set up test fixtures."""
+        self.agent_ids = [1, 2, 3]
+        self.network = BaseNetwork(self.agent_ids, p=0.5)
 
     def test_initialization(self):
         """Test that the graph is initialized correctly."""
@@ -53,11 +57,6 @@ class TestBaseNetwork(unittest.TestCase):
         print("Directed Graph (JSON):")
         # Print the JSON representation of the directed graphk
         print(network.to_json())
-
-    def setUp(self):
-        """Set up test fixtures."""
-        self.agent_ids = [1, 2, 3]
-        self.network = BaseNetwork(self.agent_ids, p=0.5)
 
     def test_disconnect_edge(self):
         """Test disconnecting an edge."""
