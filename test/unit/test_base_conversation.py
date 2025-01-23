@@ -143,6 +143,61 @@ class TestBaseConversation(unittest.TestCase):
         # Verify the conversation history
         self.assertEqual(len(conversation.messages), 4)
 
+    def test_multi_conversation(self):
+        """
+        Test multi-round conversation.
+        """
+
+        # Mock the DeepSeek API response
+        def mock_query(user_message: str) -> str:
+            return f"Mock response to: {user_message}"
+
+        # Create a conversation
+        conversation = BaseConversation(
+            conversation_id=str(uuid4()), messages=[])
+
+        # Add a user message and simulate an API response
+        user_message = BaseMessage(
+            sender="User",
+            receiver="DeepSeek",
+            message_type="user_message",
+            content=[{"role": "user", "content": "What's the weather today?"}],
+        )
+        conversation.add_api_message(user_message)
+        # Print the conversation
+        print("Conversation:", conversation)
+        # Verify the conversation history
+        self.assertEqual(len(conversation.messages), 2)
+        self.assertEqual(
+            conversation.messages[0].content[0]["content"], "What's the weather today?"
+        )
+        # self.assertEqual(conversation.messages[1].content[0]["content"], "Mock response to: What's the weather today?")
+        # Start multi-round conversation
+        user_message = BaseMessage(
+            sender="User",
+            receiver="DeepSeek",
+            message_type="user_message",
+            content=[{"role": "user", "content": "Tell me a joke."}],
+        )
+        conversation.add_api_message(user_message)
+        # Print the conversation
+        print("Conversation:", conversation)
+        # Verify the conversation history
+        self.assertEqual(len(conversation.messages), 4)
+
+        # Continue the conversation
+        user_message = BaseMessage(
+            sender="User",
+            receiver="DeepSeek",
+            message_type="user_message",
+            content=[{"role": "user", "content": "Tell me another joke."}],
+        )
+        conversation.add_api_message(user_message)
+        # Print the conversation
+        print("Conversation:", conversation)
+        # Verify the conversation history
+        self.assertEqual(len(conversation.messages), 6)
+
 
 if __name__ == "__main__":
     unittest.main()
