@@ -243,10 +243,12 @@ class BaseNetwork:
 
     def generate_random_digraph(self):
         """
-        Generate a random directed graph with the specified edge probability.
+        Generate a random directed graph with the specified edge probability, ensuring no bidirectional edges.
         """
         for start, end in permutations(self.agent_ids, 2):
-            if random.random() < self.p:
+            if self.graph.has_edge(end, start):
+                continue  # Skip if the reverse edge already exists
+            if random.random() <= self.p:
                 self.graph.add_edge(start, end)
 
     def to_json(self):

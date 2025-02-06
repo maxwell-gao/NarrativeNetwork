@@ -2,6 +2,7 @@ import unittest
 import json
 from src.common.base import BaseNetwork
 from itertools import permutations
+from operator import xor
 
 
 class TestBaseNetwork(unittest.TestCase):
@@ -39,11 +40,11 @@ class TestBaseNetwork(unittest.TestCase):
 
     def test_edge_probability(self):
         """Test that edges are generated with the specified probability."""
-        # Create a network with p=1 (all possible edges should exist)
+        # Create a network with p=1 (all possible edges should exist unless there is a reverse)
         network_all_edges = BaseNetwork(self.agent_ids, p=1.0)
-        expected_edges = list(permutations(self.agent_ids, 2))
-        for start, end in expected_edges:
-            self.assertIn(end, network_all_edges.graph[start])
+        for start, end in permutations(self.agent_ids, 2):
+            self.assertTrue(xor(network_all_edges.graph.has_edge(
+                start, end), network_all_edges.graph.has_edge(end, start)))
 
         # Create a network with p=0 (no edges should exist)
         network_no_edges = BaseNetwork(self.agent_ids, p=0.0)

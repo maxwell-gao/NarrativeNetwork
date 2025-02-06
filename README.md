@@ -18,13 +18,12 @@ We differentiate ourselves by focusing on:
 
 - **Dramatic Tension and Conflict:** Our primary focus is on generating compelling narratives driven by dramatic tension and character conflict.
 - **Abstract World Representation:** We abstract away from specific geographical locations, allowing for more flexible and impactful storytelling.
-- **Counteracting the "Active Nihilism" of Everyday Life:** Games and narratives should combat the inherent fragmentation of human experience by providing engaging and meaningful experiences. We draw inspiration from the common origins of games and festivals in this regard (曾童心).
+- **Counteracting the "Active Nihilism" of Everyday Life:** Games and narratives should combat the inherent fragmentation of human experience by providing engaging and meaningful experiences. We draw inspiration from the common origins of games and festivals in this regard. 
 - **Leveraging LLM Token Representation:** Recognizing that LLMs can't fully capture game mechanics through natural language alone, we aim to utilize the abstract token representation of LLMs to create multi-layered game representations.
 - **Synthetic Catallaxy:** We embrace the idea that game experience arises from the collision and coordination of the player's mental model and the game's world model, a concept Benjamin Bratton terms "synthetic catallaxy." We focus on synthetic (generated through non-mechanistic understanding) rather than artificial (simulating appearance) intelligence.
 
 ### Technical Foundation
 - Built in Python
-- Powered by networkx library
 - Directed graph architecture
 - Agent-based modeling
 
