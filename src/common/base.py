@@ -28,6 +28,7 @@ class BaseMessage:
         receiver: str,
         message_type: str,
         content: List[Dict[str, str]],
+        contribution: float = 0.0,
     ):
         """
         Initialize a new Message.
