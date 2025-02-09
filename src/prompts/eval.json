@@ -1,0 +1,10 @@
+{
+	"evaluation_template": {
+		"prompt": "Evaluate the contribution metric of the following message: {content} from a node in the world of current world state: {state}, and there is the commit message of this node:{history}(Determine whether it can change the state of the world and whether this is consistent with its historical submission). Suggest the metric only. The metric should be a number from 0.0-1.0, return the number only."
+	},
+	"parameters": {
+		"temperature": 0.7,
+		"max_tokens": 10,
+		"top_p": 1.0
+	}
+}

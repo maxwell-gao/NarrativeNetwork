@@ -28,7 +28,7 @@ class BaseMessage:
         receiver: str,
         message_type: str,
         content: List[Dict[str, str]],
-        contribution: float = 0.0,
+        contribution_metric: float = 0.0,
     ):
         """
         Initialize a new Message.
@@ -93,10 +93,10 @@ class BaseMessage:
 
 class BaseConversation:
     """
-    Represents a conversation with client via DeepSeek API.
+    Represents a conversation owned by a single agent.
     """
 
-    def __init__(self, conversation_id: str, messages: List[BaseMessage]):
+    def __init__(self, owner_id: str, conversation_id: str, messages: List[BaseMessage]):
         """
         Initialize a new Conversation.
 
@@ -105,6 +105,7 @@ class BaseConversation:
         """
         self.conversation_id = conversation_id
         self.messages = messages
+        self.owner = str(owner_id)
 
     def to_json(self):
         """
@@ -143,37 +144,55 @@ class BaseConversation:
         """
         self.messages.append(message)
 
+    def call_api(self, prompt: str, parameters: dict = None) -> str:
+        """
+        Calls the DeepSeek API and returns the system's response.
+
+        :param prompt: The text sent to the API.
+        :param parameters: Optional, includes parameters such as temperature, max tokens, top_p, etc.
+        :return: The text of the API response.
+        """
+        if parameters is None:
+            parameters = {
+                "temperature": 0.7,
+                "max_tokens": 10,
+                "top_p": 1.0,
+            }
+
+        try:
+            response = client.chat.completions.create(
+                model="deepseek-chat",
+                messages=[{"role": "user", "content": prompt}],
+                **parameters
+            )
+            return response.choices[0].message["content"]
+        except Exception as e:
+            print(f"Error calling DeepSeek API: {e}")
+            return ""
+
     def add_api_message(self, message: BaseMessage):
         """
-        Add a message to the conversation.
+        Sends a user message and generates a system response using the DeepSeek API.
 
-        :param message: The message to add to the conversation.
+        :param message: The BaseMessage object sent by the user.
         """
         self.messages.append(message)
-        # Prepare the messages for the API call
-        api_messages = [
-            {
-                "role": "user",
-                "content": json.dumps(msg.content, default=str) if msg.content else "",
-            }
-            for msg in self.messages[-50:]
-        ]
 
-        # Call the DeepSeek API
-        response = client.chat.completions.create(
-            model="deepseek-chat", messages=api_messages
-        )
+        # Generate the prompt for the API request
+        api_prompt = json.dumps(message.content, default=str)
 
-        # Extract the system message from the response
-        system_message_content = response.choices[0].message
-        system_message = BaseMessage(
-            sender="system",
-            receiver=self.conversation_id,
-            message_type="system_response",
-            content=[{"text": system_message_content}],
-        )
-        # Add the system message to the conversation
-        self.messages.append(system_message)
+        # Call the API
+        system_response = self.call_api(api_prompt)
+
+        # Generate and add the system response
+        if system_response:
+            system_message = BaseMessage(
+                sender="system",
+                receiver=self.conversation_id,
+                message_type="system_response",
+                content=[{"text": system_response}],
+            )
+            self.messages.append(system_message)
 
     def __repr__(self):
         """

@@ -3,7 +3,7 @@ from ..agent.state import AgentState
 from flow import InformationFlow
 from typing import Any, Dict, List
 from uuid import uuid4
-from ..common.base import BaseNetwork
+from ..common.base import BaseNetwork, BaseMessage, BaseConversation
 
 
 class WorldState:
@@ -50,6 +50,32 @@ class WorldState:
             "agent_states": self.agent_states,
             "global_motifs": self.global_motifs
         }, indent=4)
+
+    def evaluate(self, message: BaseMessage, history: str = "") -> float:
+        """
+        Evaluate the importance of a message based on its content using DeepSeek API.
+
+        :param message: A BaseMessage object.
+        :param history: The commit history of this node.
+        :return: A float representing the importance of the message (0.0 - 1.0).
+        """
+
+        with open("src/prompts/eval.json", "r", encoding="utf-8") as f:
+            eval_config = json.load(f)["evaluation_template"]
+
+        prompt = eval_config["prompt"].format(
+            content=message.content, state=self.to_json(), history=history
+        )
+
+        try:
+            response = BaseConversation.call_api(
+                prompt, eval_config["parameters"])
+            metric = float(response.choices[0].message["content"].strip())
+            # Ensure the return value is between 0.0 and 1.0
+            return max(0.0, min(1.0, metric))
+        except Exception as e:
+            print(f"Error evaluating message: {e}")
+            return -1  # Default return -1
 
     @classmethod
     def from_json(cls, json_str: str):
