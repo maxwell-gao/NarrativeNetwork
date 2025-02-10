@@ -61,7 +61,7 @@ class Node:
                 self.chain.add_block(message)
 
 
-class CentralNode:
+class SuperNode:
     """
     Represents a central node dominating the network out of the base network.
 
