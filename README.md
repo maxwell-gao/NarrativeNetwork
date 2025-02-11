@@ -1,5 +1,10 @@
 # NarrativeNetwork
 
+```Plain Text
+ |\ |  _. ._ ._ _. _|_ o     _  |\ |  _ _|_       _  ._ |  
+ | \| (_| |  | (_|  |_ | \/ (/_ | \| (/_ |_ \/\/ (_) |  |< 
+```
+
 A dynamic narrative generation system for AI-driven games, focusing on dramatic tension, conflict, and abstract world representation.
 
 ## Overview
