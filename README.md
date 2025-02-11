@@ -139,6 +139,35 @@ We differentiate ourselves by focusing on:
 ## Getting Started
 This project serves as a foundation for implementing dynamic narrative systems in games and interactive experiences. Detailed implementation guidelines and API documentation to follow.
 
+### Initial Setup
+Set up a Python environment and install the required dependencies from the `environment.yml` file.
+
+```bash
+conda env create -f environment.yml
+```
+
+Use the following command to activate the environment:
+
+```bash
+conda activate narrativeNetwork
+```
+
+### Seed and API Setup
+Use `seed_config.json` to set up the initial seed prompt and API configuration.
+
+```json
+{
+  "seed_prompt": "In a world where magic is forbidden, a young sorcerer discovers a hidden spellbook, and must decide whether to use its powers for good or evil.",
+  "api_config": {
+    "base_url": "https://api.deepseek.com",
+    "api_key": "YOUR_API_KEY",
+  }
+}
+```
+
+### Running the System
+
+
 [Additional documentation and setup instructions coming soon]
 
 ## License

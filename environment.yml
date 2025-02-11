@@ -1,4 +1,4 @@
-name: ecolllm  
+name: narrativeNetwork  
 dependencies:
   - python=3.8  
   - pip  
