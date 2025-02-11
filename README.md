@@ -4,6 +4,9 @@
  |\ |  _. ._ ._ _. _|_ o     _  |\ |  _ _|_       _  ._ |  
  | \| (_| |  | (_|  |_ | \/ (/_ | \| (/_ |_ \/\/ (_) |  |< 
 ```
+[![GitHub license](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python 3.8](https://img.shields.io/badge/Python-3.8-yellow.svg)](https://www.python.org/)
+[![NetworkX](https://img.shields.io/badge/NetworkX-3.1-green.svg)](https://networkx.org/)
 
 A dynamic narrative generation system for AI-driven games, focusing on dramatic tension, conflict, and abstract world representation.
 
