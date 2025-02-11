@@ -1,4 +1,4 @@
-# NarrativeNetwork
+
 
 ```Plain Text
  |\ |  _. ._ ._ _. _|_ o     _  |\ |  _ _|_       _  ._ |  
@@ -7,17 +7,17 @@
 
 A dynamic narrative generation system for AI-driven games, focusing on dramatic tension, conflict, and abstract world representation.
 
-## Overview
+# Overview
 NarrativeSphereAI is an experimental project creating emergent narratives through simulated agent interactions in a directed graph ecosystem. Unlike traditional simulations that focus on concrete geographical locations, we prioritize abstract representations to enhance dramatic potential. This framework serves as a backend for AI-native games, enabling dynamic story generation and character relationships.
 
-### Key Features
+## Key Features
 - Graph-based narrative structure using networkx
 - Agent-driven story evolution, emphasizing dramatic arcs
 - Dynamic relationship mapping
 - Emergent storytelling mechanics
 - AI-native game integration capabilities
 
-### Core Philosophy
+## Core Philosophy
 
 We differentiate ourselves by focusing on:
 
@@ -27,7 +27,7 @@ We differentiate ourselves by focusing on:
 - **Leveraging LLM Token Representation:** Recognizing that LLMs can't fully capture game mechanics through natural language alone, we aim to utilize the abstract token representation of LLMs to create multi-layered game representations.
 - **Synthetic Catallaxy:** We embrace the idea that game experience arises from the collision and coordination of the player's mental model and the game's world model, a concept Benjamin Bratton terms "synthetic catallaxy." We focus on synthetic (generated through non-mechanistic understanding) rather than artificial (simulating appearance) intelligence.
 
-### Technical Foundation
+## Technical Foundation
 - Built in Python
 - Directed graph architecture
 - Agent-based simluation.
@@ -39,10 +39,10 @@ We differentiate ourselves by focusing on:
 - Interactive fiction backends
 - AI-driven story worlds
 
-## System Architecture
+# System Architecture
 
-### System Components
-#### 1. Agent Layers
+## System Components
+### 1. Agent Layers
 - **Base Layer (Directed Graph Ecosystem of Character)**
   - Directly embodies playable characters
   - Nodes maintain `character chains` containing:
@@ -62,7 +62,7 @@ We differentiate ourselves by focusing on:
     - Non-recurrent world properties
   - Ensures global narrative coherence and non-recurrence
 
-#### 2. Core Data Structures
+### 2. Core Data Structures
 - **World Chain**  
   Linear blockchain-like structure maintained by Super Node containing:
   - Timestamped world states
@@ -86,9 +86,9 @@ We differentiate ourselves by focusing on:
 	   - The dominating node can force other nodes to change the commit according to its requirements and access character chains of them
 	 * Hidden layer nodes and super node have edges to all base nodes
 
-### System Dynamics
+## System Dynamics
 
-#### Initialization Phase
+### Initialization Phase
 1. **Seed Activation**  
    - User provides initial world premise (seed prompt)
    - Super Node initializes world chain with genesis block
@@ -102,7 +102,7 @@ We differentiate ourselves by focusing on:
    - Recipient nodes create own character chains
    - Submit character profiles to narrative chains
 
-#### Operational Cycle
+### Operational Cycle
 1. **Lifecycle Management**  
    - Nodes inactive for 3 cycles get reset:
      * Clear character chain
@@ -141,10 +141,10 @@ We differentiate ourselves by focusing on:
    - Hidden layer adjusts narrative weights
    - Super Node monitors dramatic entropy
 
-## Getting Started
+# Getting Started
 This project serves as a foundation for implementing dynamic narrative systems in games and interactive experiences. Detailed implementation guidelines and API documentation to follow.
 
-### Initial Setup
+## Initial Setup
 Set up a Python environment and install the required dependencies from the `environment.yml` file.
 
 ```bash
@@ -157,7 +157,7 @@ Use the following command to activate the environment:
 conda activate narrativeNetwork
 ```
 
-### Seed and API Setup
+## Seed and API Setup
 Use `seed_config.json` to set up the initial seed prompt and API configuration.
 
 ```json
@@ -170,15 +170,15 @@ Use `seed_config.json` to set up the initial seed prompt and API configuration.
 }
 ```
 
-### Running the System
+## Running the System
 
 
 [Additional documentation and setup instructions coming soon]
 
-## License
+# License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Acknowledgments
+# Acknowledgments
 - Inspiration from Propp's narrative theory.
 - Utilization of the `networkx` library for graph representation.
 - Philosophical insights from Benjamin Bratton's concept of synthetic catallaxy.
