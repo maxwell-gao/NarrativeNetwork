@@ -30,10 +30,10 @@ We differentiate ourselves by focusing on:
 - **Leveraging LLM Token Representation:** Recognizing that LLMs can't fully capture game mechanics through natural language alone, we aim to utilize the abstract token representation of LLMs to create multi-layered game representations.
 - **Synthetic Catallaxy:** We embrace the idea that game experience arises from the collision and coordination of the player's mental model and the game's world model, a concept Benjamin Bratton terms "synthetic catallaxy." We focus on synthetic (generated through non-mechanistic understanding) rather than artificial (simulating appearance) intelligence.
 
-## Technical Foundation
+<!-- ## Technical Foundation
 - Built in Python
 - Directed graph architecture
-- Agent-based simluation.
+- Agent-based simluation. -->
 
 ## Use Cases
 - Procedural narrative generation
@@ -47,18 +47,18 @@ We differentiate ourselves by focusing on:
 ## System Components
 ### 1. Agent Layers
 - **Base Layer (Directed Graph Ecosystem of Character)**
-  - Directly embodies playable characters
+  - Directly embodies playable characters play by ReAct agents
   - Nodes maintain `character chains` containing:
     - Broadcast reception/submission records
     - Role prompts
     - Event participation history
 
-- **Hidden Layer (Narrative Directors)**
+- **Hidden Layer (Routing Narrative Directors)**
   - Maintains `narrative chains` (one per Propp narrative type)
   - Each node specializes in specific narrative motifs
   - Controls dramatic progression through prompt interventions
 
-- **Super Node (World Architect)**
+- **Super Node (Evaluator-Optimizer|World Architect)**
   - Maintains single `world chain` tracking:
     - World state evolution blocks
     - Key narrative inflection points
@@ -167,7 +167,7 @@ Use `seed_config.json` to set up the initial seed prompt and API configuration.
 {
   "seed_prompt": "In a world where magic is forbidden, a young sorcerer discovers a hidden spellbook, and must decide whether to use its powers for good or evil.",
   "api_config": {
-    "base_url": "https://api.deepseek.com",
+    "base_url": "BASE_URL",
     "api_key": "YOUR_API_KEY"
   }
 }
