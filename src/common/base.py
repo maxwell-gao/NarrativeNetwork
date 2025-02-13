@@ -5,6 +5,7 @@ from datetime import datetime
 from typing import Any, Dict, List
 import random
 from itertools import permutations
+from ..utils.utils import llm_call
 
 # Use python-dotenv to read .env file
 from dotenv import load_dotenv
@@ -144,9 +145,9 @@ class BaseConversation:
         """
         self.messages.append(message)
 
-    def call_api(self, prompt: str, parameters: dict = None) -> str:
+    def call_api(self, prompt: str, model="deepseek-chat", parameters: dict = None) -> str:
         """
-        Calls the DeepSeek API and returns the system's response.
+        Calls the API and returns the system's response.
 
         :param prompt: The text sent to the API.
         :param parameters: Optional, includes parameters such as temperature, max tokens, top_p, etc.
@@ -161,13 +162,13 @@ class BaseConversation:
 
         try:
             response = client.chat.completions.create(
-                model="deepseek-chat",
+                model,
                 messages=[{"role": "user", "content": prompt}],
                 **parameters
             )
             return response.choices[0].message["content"]
         except Exception as e:
-            print(f"Error calling DeepSeek API: {e}")
+            print(f"Error calling API: {e}")
             return ""
 
     def add_api_message(self, message: BaseMessage):
@@ -181,8 +182,8 @@ class BaseConversation:
         # Generate the prompt for the API request
         api_prompt = json.dumps(message.content, default=str)
 
-        # Call the API
-        system_response = self.call_api(api_prompt)
+        # Call the API using llm_call
+        system_response = llm_call(api_prompt)
 
         # Generate and add the system response
         if system_response:

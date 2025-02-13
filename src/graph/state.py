@@ -4,6 +4,7 @@ from flow import InformationFlow
 from typing import Any, Dict, List
 from uuid import uuid4
 from ..common.base import BaseNetwork, BaseMessage, BaseConversation
+from ..utils.utils import llm_call
 
 
 class WorldState:
@@ -68,7 +69,7 @@ class WorldState:
         )
 
         try:
-            response = BaseConversation.call_api(
+            response = llm_call(
                 prompt, eval_config["parameters"])
             metric = float(response.choices[0].message["content"].strip())
             # Ensure the return value is between 0.0 and 1.0

@@ -1,8 +1,6 @@
 from openai import OpenAI
 import os
 import re
-
-# Use python-dotenv to read .env file
 from dotenv import load_dotenv
 from openai import OpenAI
 
@@ -25,28 +23,37 @@ def write_dotenv(api_key: str, model: str):
         f.write(f"MODEL={model}\n")
 
 
-def llm_call(prompt: str, system_prompt: str = "", model="deepseek-chat") -> str:
+def llm_call(prompt: str, system_prompt: str = "", model="deepseek-chat", parameters: dict = None, role="user") -> str:
     """
     Calls the model with the given prompt and returns the response.
 
     Args:
         prompt (str): The user prompt to send to the model.
         system_prompt (str, optional): The system prompt to send to the model. Defaults to "".
-        model (str, optional): The model to use for the call. 
+        model (str, optional): The model to use for the call.
 
     Returns:
         str: The response from the language model.
     """
-    client = OpenAI(api_key=os.environ["API_KEY"])
-    messages = [{"role": "user", "content": prompt}]
-    response = client.messages.create(
-        model=model,
-        max_tokens=4096,
-        system=system_prompt,
-        messages=messages,
-        temperature=0.1,
-    )
-    return response.content[0].text
+    if parameters is None:
+        parameters = {
+            "temperature": 0.7,
+            "max_tokens": 4096,
+            "top_p": 1.0,
+        }
+    try:
+        client = OpenAI(api_key=os.environ["API_KEY"])
+        messages = [{"role": role, "content": prompt}]
+        response = client.messages.create(
+            model=model,
+            system=system_prompt,
+            messages=messages,
+            **parameters
+        )
+        return response.content[0].text
+    except Exception as e:
+        print(f"Error calling API: {e}")
+        return ""
 
 
 def extract_xml(text: str, tag: str) -> str:
