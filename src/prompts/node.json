@@ -1,0 +1,16 @@
+{
+	"node_init": {
+		"prompt": "Initialize a new node with the following parameters: {parameters}. Describe the initial state of the node in detail. Place your response in the xml tag <init> and  think process in xml tag <think>."
+	},
+	"node_submit": {
+		"prompt": "Submit a new message from the node with the following content: {content}. Include the current state of the node: {state}. Place your response in the xml tag <submit> and  think process in xml tag <think>."
+	},
+	"node_update": {
+		"prompt": "Update the node with the following changes: {changes}. Include the current state of the node: {state}. Place your response in the xml tag <update> and  think process in xml tag <think>."
+	},
+	"parameters": {
+		"temperature": 0.7,
+		"max_tokens": 1024,
+		"top_p": 1.0
+	}
+}
