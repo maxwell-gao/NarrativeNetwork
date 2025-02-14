@@ -1,6 +1,6 @@
 {
 	"node_init": {
-		"prompt": "Initialize a new node with the following parameters: {parameters}. Describe the initial state of the node in detail. Place your response in the xml tag <init> and  think process in xml tag <think>."
+		"prompt": "Initialize a new node with the following parameters: {parameters}. Describe the initial state of the node in detail. Place your response in the xml tag <init> and  think process in xml tag <think>. Return the name of yourself in the xml tag <identity>."
 	},
 	"node_submit": {
 		"prompt": "Submit a new message from the node with the following content: {content}. Include the current state of the node: {state}. Place your response in the xml tag <submit> and  think process in xml tag <think>."

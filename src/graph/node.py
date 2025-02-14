@@ -23,6 +23,7 @@ class Node:
         self.base_network = base_network
         self.broadcast = Broadcast([], [base_network])
         self.p = p
+        self.identity = None
         self.node_id = str(uuid.uuid4())
         self.role = role
 
