@@ -13,10 +13,9 @@ from openai import OpenAI
 import networkx as nx
 
 load_dotenv()
-api_key = os.getenv("DEEPSEEK_API_KEY")
-
-client = OpenAI(api_key=api_key, base_url="https://api.deepseek.com")
-
+api_key = os.getenv("API_KEY")
+base_url = os.getenv("BASE_URL")
+client = OpenAI(api_key=api_key, base_url=base_url)
 
 class BaseMessage:
     """
@@ -318,23 +317,15 @@ class BaseNetwork:
 
     def reverse_edge(self, start, end):
         """
-        Reverse the direction of a specific edge if both nodes agree.
+        Reverse the direction of a specific edge. 
 
         Args:
             start: The starting node ID.
             end: The ending node ID.
 
-        Returns:
-            bool: True if the edge was reversed, False otherwise.
         """
-        if self.graph.has_edge(start, end):
-            # Simulate agreement between nodes
-            agree = self.agreement(start, end)
-            if agree:
-                self.graph.remove_edge(start, end)
-                self.graph.add_edge(end, start)
-                return True
-        return False
+        self.graph.remove_edge(start, end)
+        self.graph.add_edge(end, start)
 
     def agreement(self, start, end):
         """
@@ -350,7 +341,7 @@ class BaseNetwork:
         # For simplicity, assume both nodes agree 50% of the time
         return random.random() < 0.5
 
-    def execute_action(self, start, end, method, action):
+    def execute(self, start, end, method, action):
         """
         Execute an action (reverse, disconnect, or connect) based on the result of the method.
 
