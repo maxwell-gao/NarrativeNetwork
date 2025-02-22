@@ -366,3 +366,20 @@ class BaseNetwork:
             else:
                 raise ValueError(f"Unknown action: {action}")
         return False
+
+
+class MessageManager:
+    def __init__(self):
+        self._messages = []
+
+    def add_message(self, message):
+        self._messages.append(message)
+
+    def get_messages(self):
+        return list(self._messages)
+
+    def filter_by_metric(self, threshold=0.5):
+        return [m for m in self._messages if getattr(m, "contribution_metric", 0) >= threshold]
+
+    def clear_messages(self):
+        self._messages.clear()
